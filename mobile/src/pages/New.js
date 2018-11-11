@@ -58,7 +58,7 @@ export default class New extends Component {
                     multiline
                     placeholder="O que está acontecendo?"
                     value={this.state.newTweet}
-                    onChange={this.handleInputChange}
+                    onChangeText={this.handleInputChange}
                     placeholderTextColor="#999"
                     returnKeyType="send"
                     onSubmitEditing={this.handleNewTweet} />
