@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../services/api';
+import socket from 'socket.io-client'
 
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 
@@ -26,10 +27,28 @@ export default class Login extends Component {
     };
 
     async componentDidMount() {
+        this.subscribeToEvents();
+
         const response = await api.get('tweets');
 
         this.setState({ tweets: response.data });
-    }
+    };
+
+
+    // Apply realtime sinc.
+    subscribeToEvents = () => {     //cria uma conexao com o nosso 'websocket'.
+        const io = socket('http://10.0.3.2:3000');
+
+        io.on('tweet', data => {
+            this.setState({ tweets: [data, ...this.state.tweets] })
+        })
+
+        io.on('like', data => {
+            this.setState({ tweets: this.state.tweets.map(tweet =>          //percorre todos os tweets, e verifica se é igual ao que recebeu like, se 'true' ele atualiza a qtd de likes.
+                tweet._id === data._id ? data : tweet    
+            ) })
+        })
+    };
 
     render() {
         return (
