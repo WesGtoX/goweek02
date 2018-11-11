@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 
-import { 
-    View, 
-    Text, 
-    TextInput, 
-    TouchableOpacity, 
-    KeyboardAvoidingView, 
-    StyleSheet, 
-    AsyncStorage
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, StyleSheet, AsyncStorage } from 'react-native';
 
 import { StackActions, NavigationActions } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class Login extends Component {
+    //remover cabecalho da tela do android
     static nacigationOptions = {
         header: null
     };

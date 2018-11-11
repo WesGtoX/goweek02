@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import api from '../services/api';
 
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+
+import Tweet from '../components/Tweet'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Login extends Component {
-    static navigationOptions = {
+    static navigationOptions = ({ navigation }) => ({
         title: 'Início',
         headerRight: (
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => navigation.navigate('New')}>
                 <Icon 
                     style={{ marginRight: 20 }}
                     name="add-circle-outline"
@@ -17,7 +19,7 @@ export default class Login extends Component {
                     color="#4BB0EE" />
             </TouchableOpacity>
         ),
-    };
+    });
 
     state = {
         tweets: [],
@@ -32,7 +34,10 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
-                { this.state.tweets.map(tweet => <Text>{tweet.content}</Text>) }
+                <FlatList 
+                    data={this.state.tweets}
+                    keyExtractor={tweet => tweet._id}
+                    renderItem={({ item }) => <Tweet tweet={item} /> } />
             </View>
         )
     }
